@@ -1,11 +1,14 @@
 import { React, useState, useEffect } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { Stack } from "react-bootstrap";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 // import Pagination from "./pagination";
 import Button from "react-bootstrap/Button";
+import AddButton from "./AddButton";
+import classes from "./TransactionsTable.module.css"
 
 export const TransactionTable = () => {
   // Current dummy data
@@ -130,12 +133,19 @@ export const TransactionTable = () => {
 
     <>
       <div className="col-md-12 "></div>
-
-      <div className="col-md-8 ">
-        <Button variant="dark" onClick={() => exportPDF()}>
-          Export as PDF
-        </Button>
-      </div>
+      
+      <Stack direction="Horizontal" gap="2">
+        <div className="col-md-8 d-flex" >
+          <div>
+            <Button variant="dark" onClick={() => exportPDF()}>
+              Export as PDF
+            </Button>
+          </div>
+          <div className={classes.add}>
+            <AddButton/>
+          </div>
+        </div >
+      </Stack>
 
       <Table striped bordered hover>
         <thead>

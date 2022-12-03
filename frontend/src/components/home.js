@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate, Outlet } from "react-router-dom";
+import TransModal from "./TransModal";
 
 const Home = () => {
   const [account, setAccount] = useState("saving");
@@ -29,6 +30,7 @@ const Home = () => {
         </Form.Select>
       </div>
       <Outlet />
+      <TransModal />
     </div>
   );
 };
