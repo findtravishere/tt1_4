@@ -5,6 +5,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import isEmail from "validator/lib/isEmail";
 
+import AuthService from "../services/auth";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -144,7 +146,7 @@ const Register = () => {
   const onChangeConfirmPassword = (e) => {
     const confirmPassword = e.target.value;
     setConfirmPassword(confirmPassword);
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setError("Password not match");
     } else {
       setError("");
@@ -167,23 +169,30 @@ const Register = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      // TODO: once API done, add in
-      //   AuthService.register(Username, Password, Firstname, Lastname, Email, Address).then(
-      //     (response) => {
-      //       setMessage(response.data.message);
-      //       setSuccessful(true);
-      //     },
-      //     (error) => {
-      //       const resMessage =
-      //         (error.response &&
-      //           error.response.data &&
-      //           error.response.data.message) ||
-      //         error.message ||
-      //         error.toString();
-      //       setSuccessful(false);
-      //       setMessage(resMessage);
-      //     }
-      //   );
+      AuthService.register(
+        username,
+        password,
+        firstName,
+        lastName,
+        email,
+        address,
+        checked
+      ).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setSuccessful(false);
+          setMessage(resMessage);
+        }
+      );
     }
   };
 
