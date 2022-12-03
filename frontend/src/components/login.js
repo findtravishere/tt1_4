@@ -54,6 +54,8 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(email, password).then(
         () => {
+          console.log(email);
+          console.log(password);
           navigate("/savings");
           window.location.reload();
         },
