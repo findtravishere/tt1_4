@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from fastapi.security import OAuth2PasswordBearer
 from app.schemas.responses import User, Account
 from app.auth.oauth2 import get_current_user
@@ -270,8 +270,9 @@ async def delete_user_email(id: int):
     return "User not found"
 
 @app.get("/getUserTxn")
-async def get_txns_by_user_id(id: int):
-
+async def get_txns_by_user_id(id: int, request: Request):
+    my_header = request.headers.get('Authorization')
+    print(my_header)
     account_ids = [acc['AccountID'] for acc in accounts if acc['UserID'] == id]
     if not account_ids:
         return "No transactions found"
