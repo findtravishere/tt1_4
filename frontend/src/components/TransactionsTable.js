@@ -260,7 +260,7 @@ export const TransactionTable = ({ typeState }) => {
                   <td>{item.TransactionAmount}</td>
                   <td>{item.Comment}</td>
                   <td>
-                    <Button onClick={handleShow}>Delete</Button>
+                    <Button variant="dark" onClick={handleShow}>Delete</Button>
                   </td>
                 </tr>
               );
