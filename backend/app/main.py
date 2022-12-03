@@ -163,11 +163,12 @@ user =[
 # @app.get("/users/get")
 # async def get_user()
 
-@app.get("/accounts/", response_model=Account)
-def get_user_by_id(id: int):
-    return filter(lambda x: x.UserID == id, user)
+@app.get("/accounts/")
+def get_account_by_userid(id: int):
+    res  = list(filter(lambda x: x["UserID"] == id, accounts))
+    return res
+
 @app.post("/users/")
 def get_user_by_id(id: int):
     res  = list(filter(lambda x: x["UserID"] == id, user))
-    print(res)
     return res
