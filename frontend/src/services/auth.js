@@ -12,7 +12,7 @@ const API_URL = axios.create({
 const login = (email, password) => {
   return API_URL.post(`/login?email=${email}&password=${password}`).then(
     (response) => {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data.data));
     }
   );
 };
