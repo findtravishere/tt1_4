@@ -194,22 +194,33 @@ def update_user_email(id: int, email: str):
 async def get_all_accounts():
     return accounts
 
-@app.post("/users/deladdr")
+@app.post("/deleteUserAdd")
 async def delete_user_address(id: int):
 
-    for u in user:
-        if u["UserID"] == id:
-            u["Address"] = ""
-            return u
+    for user in users:
+        if user["UserID"] == id:
+            user["Address"] = ""
+            return user
 
-@app.post("/users/delemail")
+    return "User not found"
+
+@app.post("/deleteUserEmail")
 async def delete_user_email(id: int):
 
     for u in users:
         if u["UserID"] == id:
             u["Email"] = ""
             return u
-            
+    return "User not found"
+
+@app.get("/getUserTxn")
+async def get_txns_by_user_id(id: int):
+
+    account_id = [acc['AccountID'] for acc in accounts if acc['UserID'] == id][0]
+    if not account_id:
+        return "No transactions found"
+    return [tx for tx in txn if tx["AccountID"] == account_id]
+
 @app.post("/transactions/del")
 async def delete_transaction(id: int):
     target_txn = list(filter(lambda x: x["TransactionID"] == id, txn))[0]
@@ -226,4 +237,3 @@ async def delete_transaction(id: int):
         
     
 
-    
