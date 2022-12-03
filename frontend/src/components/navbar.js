@@ -12,22 +12,66 @@ import Register from "./register";
 import Saving from "../routes/saving";
 import Current from "../routes/current";
 import Multiplier from "../routes/multiplier";
+import AuthService from "../services/auth";
 
 const NavBar = () => {
+  const [currentUser, setCurrentUser] = useState("");
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
+  const logout = () => {
+    AuthService.logout();
+  };
+
   return (
-    <>
+    <div>
       <Navbar bg="danger" variant="dark">
         <Container>
           <Navbar.Brand href="/">Team 4</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
-            <Nav.Link href="/register">Register</Nav.Link>
-            <Nav.Link href="/login">Logout</Nav.Link>
-            <Nav.Link href="/saving">Saving</Nav.Link>
-            <Nav.Link href="/current">Current</Nav.Link>
-            <Nav.Link href="/multiplier">Multiplier</Nav.Link>
-          </Nav>
+          <Navbar.Toggle
+            aria-controls="navbarScroll"
+            data-bs-target="#navbarScroll"
+          />
+          <Navbar.Collapse>
+            <div className="navbar-nav mr-auto">
+              {currentUser && <Nav.Link href="/">Home</Nav.Link>}
+              {currentUser && <Nav.Link href="/savings">Savings</Nav.Link>}
+              {currentUser && <Nav.Link href="/current">Current</Nav.Link>}
+              {currentUser && (
+                <Nav.Link href="/multiplier">Multiplier</Nav.Link>
+              )}
+            </div>
+
+            {currentUser ? (
+              <div className="navbar-nav ms-auto">
+                <Nav className="me-auto">
+                  <Nav.Link href="/profile">
+                    <strong>Hi, {currentUser.Name}</strong>{" "}
+                    <strong>ID: {currentUser.Id}</strong>
+                  </Nav.Link>
+
+                  <Nav.Link href="/profile">Profile</Nav.Link>
+
+                  <Nav.Link href="/login" onClick={logout}>
+                    Logout
+                  </Nav.Link>
+                </Nav>
+              </div>
+            ) : (
+              <div className="navbar-nav ms-auto">
+                <Nav className="me-auto">
+                  <Nav.Link href="/login">Login</Nav.Link>
+                  <Nav.Link href="/register">Register</Nav.Link>
+                </Nav>
+              </div>
+            )}
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 
@@ -43,7 +87,7 @@ const NavBar = () => {
           </Route>
         </Routes>
       </div>
-    </>
+    </div>
   );
 };
 
