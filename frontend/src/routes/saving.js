@@ -5,7 +5,7 @@ const Saving = () => {
   return (
     <div style={{ marginTop: 20 }}>
       <Balance amount="1813.56" />
-      <TransactionTable />
+      <TransactionTable typeState={"Saving"} />
     </div>
   );
 };
