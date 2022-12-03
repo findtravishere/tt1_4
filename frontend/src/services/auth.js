@@ -13,7 +13,7 @@ const login = (email, password) => {
     email,
     password,
   }).then((response) => {
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.setItem("user", JSON.stringify(response.data.data));
   });
 };
 
