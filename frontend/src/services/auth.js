@@ -27,7 +27,7 @@ const register = (
   optIntoPhyStatements
 ) => {
   return API_URL.post(
-    `/signup?username=${username}&password=${password}&email=${email}
+    `/create?username=${username}&password=${password}&email=${email}
   &firstname=${firstname}
   &lastname=${lastname}
   &address=${address}
