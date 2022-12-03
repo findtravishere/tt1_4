@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import axios from "axios";
+import Table from "react-bootstrap/Table";
 
 export const TransactionTable = () => {
 	// Current dummy data
@@ -74,17 +75,43 @@ export const TransactionTable = () => {
 
 	// Skeleton mapping
 	return (
-		<div>
-			{transactions.map((item) => (
-				<li key={item.TransactionID}>
-					<p>{item.TransactionID}</p>
-					<p>{item.AccountID}</p>
-					<p>{item.ReceivingAccountID}</p>
-					<p>{formatDistanceToNow(new Date(item.Date), { addSuffix: true })}</p>
-					<p>{item.TransactionAmount}</p>
-					<p>{item.Comment}</p>
-				</li>
-			))}
-		</div>
+		// <div>
+		// 	{transactions.map((item) => (
+		// 		<li key={item.TransactionID}>
+		// 			<p>{item.TransactionID}</p>
+		// 			<p>{item.AccountID}</p>
+		// 			<p>{item.ReceivingAccountID}</p>
+		// 			<p>{formatDistanceToNow(new Date(item.Date), { addSuffix: true })}</p>
+		// 			<p>{item.TransactionAmount}</p>
+		// 			<p>{item.Comment}</p>
+		// 		</li>
+		// 	))}
+		// </div>
+		<Table striped bordered hover>
+			<thead>
+				<tr>
+					<th>TransactionID</th>
+					<th>AccountID</th>
+					<th>ReceivingAccountID</th>
+					<th>Date</th>
+					<th>TransactionAmount</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+				{transactions.map((item) => (
+					<tr key={item.TransactionID}>
+						<td>{item.TransactionID}</td>
+						<td>{item.AccountID}</td>
+						<td>{item.ReceivingAccountID}</td>
+						<td>
+							{formatDistanceToNow(new Date(item.Date), { addSuffix: true })}
+						</td>
+						<td>{item.TransactionAmount}</td>
+						<td>{item.Comment}</td>
+					</tr>
+				))}
+			</tbody>
+		</Table>
 	);
 };
