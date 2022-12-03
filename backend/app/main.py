@@ -4,8 +4,22 @@ from app.schemas.responses import User, Account
 from app.auth.oauth2 import get_current_user
 from app.routers import auth, users
 from app.config import settings
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(root_path=f"{settings.root_path}")
+
+
+# add accepted hostname/host website/domain names here when implementing to prevent unauthorised access.
+origins = ["http://localhost:3000",]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+
+)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
