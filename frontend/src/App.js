@@ -1,11 +1,7 @@
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-	return (
-		<div className="App">
-			<h1>Hello DBS</h1>
-		</div>
-	);
-}
+const App = () => {
+  return <></>;
+};
 
 export default App;
