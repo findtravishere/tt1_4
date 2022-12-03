@@ -23,7 +23,7 @@ export default function TransModal({ show, handleClose }) {
                 </Modal.Header>
                 <Modal.Body>
                 <Form.Group className="mb-3" controlId="BankId">
-                    <Form.Label>Bank Id</Form.Label>
+                    <Form.Label>Bank ID</Form.Label>
                     <Form.Control ref={bankidRef} type="number" required />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="max">
