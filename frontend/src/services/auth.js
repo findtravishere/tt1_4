@@ -1,20 +1,20 @@
 import axios from "axios";
 
 const API_URL = axios.create({
-  baseURL: "http://restapi.adequateshop.com/api/authaccount/",
+  baseURL: "http://ec2-3-143-238-200.us-east-2.compute.amazonaws.com",
+  // baseURL: "http://restapi.adequateshop.com/api/authaccount/",
+
   headers: {
-    Authorization: "Bearer <token>",
-    "Content-type": "application/json",
+    "Content-Type": "application/json",
   },
 });
 
 const login = (email, password) => {
-  return API_URL.post(`login`, {
-    email,
-    password,
-  }).then((response) => {
-    localStorage.setItem("user", JSON.stringify(response.data.data));
-  });
+  return API_URL.post(`/login?email=${email}&password=${password}`).then(
+    (response) => {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+  );
 };
 
 const register = (
@@ -26,15 +26,22 @@ const register = (
   address,
   optIntoPhyStatements
 ) => {
-  return API_URL.post(`register`, {
-    username,
-    password,
-    email,
-    firstname,
-    lastname,
-    address,
-    optIntoPhyStatements,
-  });
+  return API_URL.post(
+    `/signup?username=${username}&password=${password}&email=${email}
+  &firstname=${firstname}
+  &lastname=${lastname}
+  &address=${address}
+  &optIntoPhyStatements=${address}`,
+    {
+      username,
+      password,
+      email,
+      firstname,
+      lastname,
+      address,
+      optIntoPhyStatements,
+    }
+  );
 };
 
 const logout = () => {
