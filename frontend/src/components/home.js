@@ -33,7 +33,7 @@ const Home = () => {
       </div>
       <Outlet />
       <Button variant="danger" onClick={() => setShowAddTransModal(true)}>
-        Add Budget
+        Add Transaction
       </Button>
       <TransModal show={showAddTransModal} handleClose={() => setShowAddTransModal(false)}/>
     </div>
