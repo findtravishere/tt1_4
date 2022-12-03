@@ -160,15 +160,33 @@ user =[
     }
 ]
 
-# @app.get("/users/get")
-# async def get_user()
-
 @app.get("/accounts/")
 def get_account_by_userid(id: int):
     res  = list(filter(lambda x: x["UserID"] == id, accounts))
     return res
 
-@app.post("/users/")
+@app.get("/users/")
 def get_user_by_id(id: int):
+    res  = list(filter(lambda x: x["UserID"] == id, user))
+    return res
+
+
+@app.patch("/users/addr")
+def update_user_addr(id: int, addr: str):
+    
+    for u in user:
+        if u["UserID"] == id:
+            u["Address"] = addr
+            break
+    res  = list(filter(lambda x: x["UserID"] == id, user))
+    return res
+
+@app.patch("/users/email")
+def update_user_email(id: int, email: str):
+
+    for u in user:
+        if u["UserID"] == id:
+            u["Email"] = email
+            break
     res  = list(filter(lambda x: x["UserID"] == id, user))
     return res
