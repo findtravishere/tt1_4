@@ -29,7 +29,7 @@ def login(email:str, password:str):
         }
     ).dict())
 
-    data = userCheck
+    data = userCheck.copy()
     del data["Password"]
 
     return {"access_token": token, "token_type": "bearer", "data": data}
