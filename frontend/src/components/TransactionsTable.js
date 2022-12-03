@@ -7,6 +7,7 @@ import "jspdf-autotable";
 // import Pagination from "./pagination";
 import Button from "react-bootstrap/Button";
 import DeleteModal from "./DeleteModal";
+import TransModal from "./TransModal";
 
 export const TransactionTable = ({ typeState }) => {
   // Current dummy data
@@ -156,6 +157,9 @@ export const TransactionTable = ({ typeState }) => {
   const handleClose = () => setDeleteModalOpen(false);
   const handleShow = () => setDeleteModalOpen(true);
 
+  // Handling of add modal state
+  const [showAddTransModal, setShowAddTransModal] = useState(false);
+
   // Handle PDF button
   const exportPDF = () => {
     const unit = "pt";
@@ -213,10 +217,20 @@ export const TransactionTable = ({ typeState }) => {
   return (
     <>
       <div style={{ marginTop: 40 }}>
-        <div className="col-md-12 "></div>
-        <div className="col-md-8 ">
+        <div className="col-md-12"></div>
+        <div
+          className="col-md-8"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <Button variant="dark" onClick={() => exportPDF()}>
             Export as PDF
+          </Button>
+          <Button variant="danger" onClick={() => setShowAddTransModal(true)}>
+            Add Transaction
           </Button>
         </div>
         <Table striped bordered hover style={{ marginTop: 20 }}>
@@ -255,6 +269,10 @@ export const TransactionTable = ({ typeState }) => {
         </Table>
       </div>
       <DeleteModal show={deleteModalOpen} handleClose={handleClose} />
+      <TransModal
+        show={showAddTransModal}
+        handleClose={() => setShowAddTransModal(false)}
+      />
     </>
   );
 };

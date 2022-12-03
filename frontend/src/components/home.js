@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate, Outlet } from "react-router-dom";
-import { Button } from "react-bootstrap";
-import TransModal from "./TransModal";
 
 const Home = () => {
   const [account, setAccount] = useState("saving");
-  const [showAddTransModal, setShowAddTransModal] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +29,6 @@ const Home = () => {
         </Form.Select>
       </div>
       <Outlet />
-      <Button variant="danger" onClick={() => setShowAddTransModal(true)}>
-        Add Transaction
-      </Button>
-      <TransModal show={showAddTransModal} handleClose={() => setShowAddTransModal(false)}/>
     </div>
   );
 };
