@@ -23,15 +23,15 @@ const Login = () => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [email, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onChangeUsername = (e) => {
+  const onChangeEmail = (e) => {
     const email = e.target.value;
-    setUsername(email);
+    setEmail(email);
   };
 
   const onChangePassword = (e) => {
@@ -54,7 +54,7 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(email, password).then(
         () => {
-          navigate("/profile");
+          navigate("/savings");
           window.location.reload();
         },
         (error) => {
@@ -78,13 +78,13 @@ const Login = () => {
 
       <Form onSubmit={handleLogin} ref={form}>
         <div className="mb-3">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">Email</label>
           <Input
-            type="text"
+            type="email"
             className="form-control"
-            name="username"
+            name="email"
             value={email}
-            onChange={onChangeUsername}
+            onChange={onChangeEmail}
             validations={[required]}
           />
         </div>
