@@ -71,14 +71,15 @@ const Profile = () => {
           <Form>
             <header className="jumbotron">
               <h3>
-                <strong>Welcome, {currentUser.Name}</strong>
-                <strong>Welcome, {currentUser.access_token}</strong>
+                <strong>Welcome, {currentUser.Username}</strong>
               </h3>
             </header>
 
             <div className="mb-3">
               <label>Token:</label>
-              <strong className="form-control">{currentUser.Token}</strong>
+              <strong className="form-control">
+                {currentUser.access_token}
+              </strong>
             </div>
 
             <div className="mb-3">
@@ -92,7 +93,7 @@ const Profile = () => {
                 type="email"
                 className="form-control"
                 name="email"
-                value={currentProfile.Email}
+                value={currentUser.Email}
                 onChange={handleInputChange}
               />
             </div>
@@ -103,7 +104,7 @@ const Profile = () => {
                 type="text"
                 className="form-control"
                 name="text"
-                value={currentProfile.Address}
+                value={currentUser.Address}
                 onChange={handleInputChange}
               />
             </div>
