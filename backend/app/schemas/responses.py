@@ -10,6 +10,14 @@ class CreateUser(BaseModel):
 
 class User(BaseModel):
     id: int
+    username: str
+    password: str
+    firstName: str
+    secondName: str
     email: str
-    name: str
-    roles: list[str]
+    address: str
+    optIntoPhyStatements: int
+    
+class Account(BaseModel):
+    accntId: int
+    userId: int
