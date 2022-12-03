@@ -56,7 +56,7 @@ const Login = () => {
         () => {
           console.log(email);
           console.log(password);
-          navigate("/savings");
+          navigate("/saving");
           window.location.reload();
         },
         (error) => {
