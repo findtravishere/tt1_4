@@ -168,7 +168,29 @@ def get_account_by_userid(id: int):
     res  = list(filter(lambda x: x["UserID"] == id, accounts))
     return res
 
-@app.post("/users/")
+@app.get("/users/")
 def get_user_by_id(id: int):
     res  = list(filter(lambda x: x["UserID"] == id, user))
     return res
+
+@app.get("/accounts/")
+async def get_all_accounts():
+    return accounts
+
+@app.post("/users")
+async def delete_user_address(id: int):
+
+    for user in users:
+        if user["UserID"] == id:
+            user["Address"] = ""
+            return user
+
+@app.post("/users")
+async def delete_user_email(id: int):
+
+    for user in users:
+        if user["UserID"] == id:
+            user["Email"] = "", ""
+            return user
+
+    
