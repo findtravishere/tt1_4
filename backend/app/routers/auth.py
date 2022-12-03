@@ -30,6 +30,7 @@ def login(email:str, password:str):
     ).dict())
 
     data = userCheck.copy()
+    data["access_token"] = token
     del data["Password"]
 
-    return {"access_token": token, "token_type": "bearer", "data": data}
+    return { "token_type": "bearer", "data": data}
