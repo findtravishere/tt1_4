@@ -9,6 +9,9 @@ import Login from "../components/login";
 import Home from "../components/home";
 import Profile from "../components/profile";
 import Register from "./register";
+import Saving from "../routes/saving";
+import Current from "../routes/current";
+import Multiplier from "../routes/multiplier";
 
 const NavBar = () => {
   return (
@@ -29,7 +32,11 @@ const NavBar = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />}>
+            <Route path="/saving" element={<Saving />} />
+            <Route path="/current" element={<Current />} />
+            <Route path="/multiplier" element={<Multiplier />} />
+          </Route>
         </Routes>
       </div>
     </>
