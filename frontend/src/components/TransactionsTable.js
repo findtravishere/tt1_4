@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Pagination from "./pagination";
+import Button from "react-bootstrap/Button";
 
 export const TransactionTable = () => {
   // Current dummy data
@@ -131,9 +132,9 @@ export const TransactionTable = () => {
       <div className="col-md-12 "></div>
 
       <div className="col-md-8 ">
-        <button variant="dark" onClick={() => exportPDF()}>
+        <Button variant="dark" onClick={() => exportPDF()}>
           Export as PDF
-        </button>{" "}
+        </Button>
       </div>
 
       <Table striped bordered hover>
