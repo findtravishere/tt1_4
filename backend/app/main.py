@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer
-from app.schemas.responses import User
+from app.schemas.responses import User, Account
 from app.auth.oauth2 import get_current_user
 from app.routers import auth, users
 from app.config import settings
@@ -160,6 +160,14 @@ user =[
     }
 ]
 
-@app.get("/users/me", response_model=User)
-async def readUsersMe(currentUser: User = Depends(get_current_user)):
-    return User(**currentUser.__dict__)
+# @app.get("/users/get")
+# async def get_user()
+
+@app.get("/accounts/", response_model=Account)
+def get_user_by_id(id: int):
+    return filter(lambda x: x.UserID == id, user)
+@app.post("/users/")
+def get_user_by_id(id: int):
+    res  = list(filter(lambda x: x["UserID"] == id, user))
+    print(res)
+    return res
