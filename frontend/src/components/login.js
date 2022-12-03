@@ -5,6 +5,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
+import AuthService from "../services/auth";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -21,15 +23,15 @@ const Login = () => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
+    const email = e.target.value;
+    setUsername(email);
   };
 
   const onChangePassword = (e) => {
@@ -50,22 +52,22 @@ const Login = () => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      //   AuthService.login(username, password).then(
-      //     () => {
-      //       navigate("/profile");
-      //       window.location.reload();
-      //     },
-      //     (error) => {
-      //       const resMessage =
-      //         (error.response &&
-      //           error.response.data &&
-      //           error.response.data.message) ||
-      //         error.message ||
-      //         error.toString();
-      //       setLoading(false);
-      //       setMessage(resMessage);
-      //     }
-      //   );
+      AuthService.login(email, password).then(
+        () => {
+          navigate("/profile");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setLoading(false);
+          setMessage(resMessage);
+        }
+      );
     } else {
       setLoading(false);
     }
@@ -81,7 +83,7 @@ const Login = () => {
             type="text"
             className="form-control"
             name="username"
-            value={username}
+            value={email}
             onChange={onChangeUsername}
             validations={[required]}
           />
