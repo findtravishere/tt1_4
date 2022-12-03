@@ -1,7 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "./components/navbar";
 
 const App = () => {
-  return <></>;
+  return (
+    <div>
+      <NavBar />
+    </div>
+  );
 };
 
 export default App;
