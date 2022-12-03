@@ -247,8 +247,9 @@ async def get_txns_by_user_id(id: int):
         return "No transactions found"
     res = []
     for acc_id in account_ids:
-        if txn["AccountID"] == acc_id:
-            res.append(acc_id)
+        for tx in txns:
+            if tx["AccountID"] == acc_id:
+                res.append(acc_id)
     return res
 
 @app.post("/transactions/del")
