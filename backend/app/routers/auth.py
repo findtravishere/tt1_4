@@ -10,14 +10,16 @@ router = APIRouter(prefix="/login", tags=["Authentication"])
 
 
 @router.post("")
-def login(credentials: OAuth2PasswordRequestForm = Depends()):
+def login(email:str, password:str):
 
-    userCheck = list(filter(lambda x:x["Email"]== credentials.username, main.user))
+    userCheck = list(filter(lambda x:x["Email"]== email, main.user))
     
     if not userCheck: 
         return {"ERROR":"INVALID CREDENTIALS"}
     else:
         userCheck = userCheck[0]
+        if userCheck["Password"] != password:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Invalid Credentials")
     token = create_access_token(data=schemas.TokenData(
         **{"id": userCheck["UserID"],
         "email": userCheck["Email"],

@@ -114,7 +114,7 @@ user =[
         "Password": "DBSBestBank2022",
         "Firstname": "Tom",
         "Lastname": "Lim",
-        "Password": "$2b$12$36yFUEW6XWcUDOknqycbPOIW4clnMZc7A/8mUam3Bq3dFnqqcGxd.",
+        "Password": "password",
         "Email": "TomLim@easymail.com",
         "Address": "Block 123 Serangoon Garden #10-129",
         "OptIntoPhyStatements": 0
@@ -125,7 +125,7 @@ user =[
         "Password": "iWant2JoinDBS",
         "Firstname": "Mary",
         "Lastname": "Tan",
-        "Password": "$2b$12$36yFUEW6XWcUDOknqycbPOIW4clnMZc7A/8mUam3Bq3dFnqqcGxd.",
+        "Password": "password",
         "Email": "MaryTan@simplemail.com",
         "Address": "Block 234 Changi Business Park #50-123",
         "OptIntoPhyStatements": 1
@@ -136,7 +136,7 @@ user =[
         "Password": "Top5Seeder",
         "Firstname": "Gary",
         "Lastname": "Ong",
-        "Password": "$2b$12$36yFUEW6XWcUDOknqycbPOIW4clnMZc7A/8mUam3Bq3dFnqqcGxd.",
+        "Password": "password",
         "Email": "GaryOng@easymail.com",
         "Address": "Block 345 Jurong Business Park #25-214",
         "OptIntoPhyStatements": 0
@@ -147,7 +147,7 @@ user =[
         "Password": "Whatis2Years",
         "Firstname": "Harry",
         "Lastname": "Goh",
-        "Password": "$2b$12$36yFUEW6XWcUDOknqycbPOIW4clnMZc7A/8mUam3Bq3dFnqqcGxd.",
+        "Password": "password",
         "Email": "HarryGoh@bestbank.com",
         "Address": "Block 456 One North Fusionopolis #34-743",
         "OptIntoPhyStatements": 0
@@ -158,7 +158,7 @@ user =[
         "Password": "Multiplier3.5%",
         "Firstname": "Cheryl",
         "Lastname": "Chia",
-        "Password": "$2b$12$36yFUEW6XWcUDOknqycbPOIW4clnMZc7A/8mUam3Bq3dFnqqcGxd.",
+        "Password": "password",
         "Email": "CherylChia@bestbank.com",
         "Address": "Block 567 Marina Bay Sands #63-743",
         "OptIntoPhyStatements": 1
