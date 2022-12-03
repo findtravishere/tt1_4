@@ -240,10 +240,14 @@ async def delete_user_email(id: int):
 @app.get("/getUserTxn")
 async def get_txns_by_user_id(id: int):
 
-    account_id = [acc['AccountID'] for acc in accounts if acc['UserID'] == id][0]
+    account_ids = [acc['AccountID'] for acc in accounts if acc['UserID'] == id]
     if not account_id:
         return "No transactions found"
-    return [tx for tx in txn if tx["AccountID"] == account_id]
+    res = []
+    for acc_id in account_ids:
+        if txn["AccountID"] == acc_id:
+            res.append(acc_id)
+    return res
 
 @app.post("/transactions/del")
 async def delete_transaction(id: int):
