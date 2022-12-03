@@ -1,19 +1,27 @@
-from ..models.models import Users
+from ..models.models import User
 from ..schemas import responses, inputs
 from app.auth.oauth2 import pwd_context
 from fastapi import status, HTTPException, Depends, APIRouter
 from ..database import get_db
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/users", tags=["Users"])
+router = APIRouter(prefix="/users", tags=["User"])
 
 
 @router.post("/create", status_code=status.HTTP_201_CREATED, response_model=responses.User)
 async def create_user(user: inputs.CreateUser, db: Session = Depends(get_db)):
+    
     hashed_pwd = pwd_context.hash(user.password)
-    new_user = Users(**user.dict())
-    new_user.password = hashed_pwd
-    new_user.roles = [1234]
+    new_user = User(**user.dict())
+    new_user.Password = hashed_pwd
+    new_user.UserID = [user.userId]
+    new_user.Username = [user.username]
+    new_user.Firstname = [user.firstName]
+    new_user.Lastname = [user.lastName]
+    new_user.Email = [user.email]
+    new_user.Address = [user.address]
+    new_user.OptIntoPhyStatements = [user.optIntoPhyStatements]
+
     try:
         db.add(new_user)
         db.commit()
@@ -26,7 +34,7 @@ async def create_user(user: inputs.CreateUser, db: Session = Depends(get_db)):
 
 @router.delete("/delete", status_code=status.HTTP_200_OK)
 async def delete_user(id: int, db: Session = Depends(get_db)):
-    user = db.query(Users).filter(Users.id == id).first()
+    user = db.query(User).filter(User.user_id == id).first()
 
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id:{id} was not found")
@@ -43,7 +51,7 @@ async def delete_user(id: int, db: Session = Depends(get_db)):
 
 @router.get("/by-id", response_model=responses.User)
 async def get_user_by_id(id: int, db: Session = Depends(get_db)):
-    user = db.query(Users).filter(Users.id == id).first()
+    user = db.query(User).filter(User.user_id == id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"user with id={id} was not found")
     return responses.User(**user.__dict__)
@@ -54,7 +62,7 @@ async def seed_users(db: Session = Depends(get_db)):
     # 1234: normie rights,
     # 2354: admin rights
     seed_users = [
-        Users(
+        User(
             **{
                 "email": "normie@example.com",
                 "name": "Normie",
@@ -62,7 +70,7 @@ async def seed_users(db: Session = Depends(get_db)):
                 "roles": [1234],
             }
         ),
-        Users(
+        User(
             **{
                 "email": "admin@example.com",
                 "name": "Admin",
@@ -77,7 +85,7 @@ async def seed_users(db: Session = Depends(get_db)):
         db.commit()
     except ValueError:
         db.rollback()
-        raise HTTPException("Value Error: probably already created")
+        raise HTTPException("Value Error: Email ")
     except Exception as error:
         db.rollback()
         raise HTTPException(error)
