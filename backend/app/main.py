@@ -5,6 +5,8 @@ from app.auth.oauth2 import get_current_user
 from app.routers import auth, users
 from app.config import settings
 
+import datetime
+
 app = FastAPI(root_path=f"{settings.root_path}")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -85,7 +87,7 @@ txn = [
         "TransactionID": 3,
         "AccountID": 828120424,
         "ReceivingAccountID": 322798030,
-        "Date": "2022-11-25T04:00:00.000Z",
+        "Date": "2022-12-25T04:00:00.000Z",
         "TransactionAmount": 3000.00,
         "Comment": "Driving Centre Top-up"
     },
@@ -207,5 +209,21 @@ async def delete_user_email(id: int):
         if u["UserID"] == id:
             u["Email"] = ""
             return u
+            
+@app.post("/transactions/del")
+async def delete_transaction(id: int):
+    target_txn = list(filter(lambda x: x["TransactionID"] == id, txn))[0]
+    now = datetime.datetime.now()
+    
+    s = target_txn["Date"]
+    f = "%Y-%m-%dT%H:%M:%S.%fZ"
+    txn_time = datetime.datetime.strptime(s, f)
+    
+    
+    if txn_time > now:
+        txn.remove(target_txn)
+        print("Success")
+        
+    
 
     
