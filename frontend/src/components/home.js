@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate, Outlet } from "react-router-dom";
+import AddButton from "./AddButton";
+import { Stack } from "react-bootstrap"
 
 const Home = () => {
   const [account, setAccount] = useState("saving");
@@ -28,7 +30,16 @@ const Home = () => {
           <option value="multiplier">Multiplier Account</option>
         </Form.Select>
       </div>
-      <Outlet />
+      <div>
+        <Stack direction="horizontal" gap="2">
+          <div>
+            <Outlet />
+          </div>
+          <div className="ms-auto mt-4">
+            <AddButton />
+          </div>
+        </Stack>
+      </div>
     </div>
   );
 };
