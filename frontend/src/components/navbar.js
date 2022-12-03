@@ -21,8 +21,12 @@ const NavBar = () => {
           <Navbar.Brand href="/">Team 4</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/login">Logout</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/register">Register</Nav.Link>
+            <Nav.Link href="/login">Logout</Nav.Link>
+            <Nav.Link href="/saving">Saving</Nav.Link>
+            <Nav.Link href="/current">Current</Nav.Link>
+            <Nav.Link href="/multiplier">Multiplier</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
