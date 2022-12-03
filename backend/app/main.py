@@ -204,15 +204,23 @@ async def add_transaction(
 
     TransactionID = txn[-1]["TransactionID"] + 1
 
-    for i in txn:
-        if AccountID in i.values():
-            continue
-        return "Account ID does not exist. Please enter a valid one." 
+    oneExists = False
+    for acc in accounts:
+        if AccountID == acc["AccountID"]:
+            oneExists = True
+            break
 
-    for i in txn:
-        if ReceivingAccountID in i.values():
-            continue
+    twoExists = False
+    for acc in accounts:
+        if ReceivingAccountID == acc["AccountID"]:
+            twoExists = True
+            break
+        
+    if not(oneExists and twoExists):
         return "Receiving Account ID does not exist. Please enter a valid one."
+    
+    elif (AccountID == ReceivingAccountID):
+        return "Cannot transfer to yourself"
         
     DateTime = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
     new_txn = {
