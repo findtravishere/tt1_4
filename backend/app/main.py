@@ -177,9 +177,8 @@ def update_user_addr(id: int, addr: str):
     for u in user:
         if u["UserID"] == id:
             u["Address"] = addr
-            break
-    res  = list(filter(lambda x: x["UserID"] == id, user))
-    return res
+            return u
+
 
 @app.patch("/users/email")
 def update_user_email(id: int, email: str):
@@ -187,6 +186,26 @@ def update_user_email(id: int, email: str):
     for u in user:
         if u["UserID"] == id:
             u["Email"] = email
-            break
-    res  = list(filter(lambda x: x["UserID"] == id, user))
-    return res
+            return u
+
+@app.get("/accounts/getall")
+async def get_all_accounts():
+    return accounts
+
+@app.post("/users/deladdr")
+async def delete_user_address(id: int):
+
+    for u in user:
+        if u["UserID"] == id:
+            u["Address"] = ""
+            return u
+
+@app.post("/users/delemail")
+async def delete_user_email(id: int):
+
+    for u in users:
+        if u["UserID"] == id:
+            u["Email"] = ""
+            return u
+
+    
