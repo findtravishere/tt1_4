@@ -14,6 +14,8 @@ def login(email:str, password:str):
 
     userCheck = list(filter(lambda x:x["Email"]== email, main.user))
     
+
+
     if not userCheck: 
         return {"ERROR":"INVALID CREDENTIALS"}
     else:
@@ -27,4 +29,7 @@ def login(email:str, password:str):
         }
     ).dict())
 
-    return {"access_token": token, "token_type": "bearer"}
+    data = userCheck
+    del data["Password"]
+
+    return {"access_token": token, "token_type": "bearer", "data": data}
