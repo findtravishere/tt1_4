@@ -7,29 +7,16 @@ from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/users", tags=["User"])
 
+from .. import main
 
-@router.post("/create", status_code=status.HTTP_201_CREATED, response_model=responses.User)
-async def create_user(user: inputs.CreateUser, db: Session = Depends(get_db)):
-    
-    hashed_pwd = pwd_context.hash(user.password)
-    new_user = User(**user.dict())
-    new_user.Password = hashed_pwd
-    new_user.UserID = [user.userId]
-    new_user.Username = [user.username]
-    new_user.Firstname = [user.firstName]
-    new_user.Lastname = [user.lastName]
-    new_user.Email = [user.email]
-    new_user.Address = [user.address]
-    new_user.OptIntoPhyStatements = [user.optIntoPhyStatements]
 
-    try:
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
-    except Exception as error:
-        db.rollback()
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Email already in use --> {error}")
-    return responses.User(**new_user.__dict__)
+@router.post("/create", status_code=status.HTTP_201_CREATED)
+async def create_user(password: str):
+    print(main.user)
+    hashed_pwd = pwd_context.hash(password)
+    print(hashed_pwd)
+
+    return hashed_pwd
 
 
 @router.delete("/delete", status_code=status.HTTP_200_OK)
