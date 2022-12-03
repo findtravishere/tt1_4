@@ -41,11 +41,6 @@ const NavBar = () => {
           <Navbar.Collapse>
             <div className="navbar-nav mr-auto">
               {currentUser && <Nav.Link href="/">Home</Nav.Link>}
-              {currentUser && <Nav.Link href="/saving">Savings</Nav.Link>}
-              {currentUser && <Nav.Link href="/current">Current</Nav.Link>}
-              {currentUser && (
-                <Nav.Link href="/multiplier">Multiplier</Nav.Link>
-              )}
             </div>
 
             {currentUser ? (
