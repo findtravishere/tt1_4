@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 // import Pagination from "./pagination";
 import Button from "react-bootstrap/Button";
+import DeleteModal from "./DeleteModal";
 
 export const TransactionTable = () => {
   // Current dummy data
@@ -60,6 +61,11 @@ export const TransactionTable = () => {
   const updateTransactionState = () => {
     setTransactionState(false);
   };
+
+  // Handling of delete modal state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const handleClose = () => setDeleteModalOpen(false);
+  const handleShow = () => setDeleteModalOpen(true);
 
   const exportPDF = () => {
     const unit = "pt";
@@ -128,39 +134,48 @@ export const TransactionTable = () => {
     // 	))}
     // </div>
 
-    <div style={{ marginTop: 40 }}>
-      <div className="col-md-12 "></div>
-      <div className="col-md-8 ">
-        <Button variant="dark" onClick={() => exportPDF()}>
-          Export as PDF
-        </Button>
-      </div>
-      <Table striped bordered hover style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            {/* <th>TransactionID</th> */}
-            {/* <th>AccountID</th> */}
-            <th>Receiving Account ID</th>
-            <th>Date</th>
-            <th>Transaction Amount</th>
-            <th>Comment</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((item) => (
-            <tr key={item.TransactionID}>
-              {/* <td>{item.TransactionID}</td> */}
-              {/* <td>{item.AccountID}</td> */}
-              <td>{item.ReceivingAccountID}</td>
-              <td>
-                {formatDistanceToNow(new Date(item.Date), { addSuffix: true })}
-              </td>
-              <td>{item.TransactionAmount}</td>
-              <td>{item.Comment}</td>
+    <>
+      <div style={{ marginTop: 40 }}>
+        <div className="col-md-12 "></div>
+        <div className="col-md-8 ">
+          <Button variant="dark" onClick={() => exportPDF()}>
+            Export as PDF
+          </Button>
+        </div>
+        <Table striped bordered hover style={{ marginTop: 20 }}>
+          <thead>
+            <tr>
+              {/* <th>TransactionID</th> */}
+              {/* <th>AccountID</th> */}
+              <th>Receiving Account ID</th>
+              <th>Date</th>
+              <th>Transaction Amount</th>
+              <th>Comment</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+          </thead>
+          <tbody>
+            {transactions.map((item) => (
+              <tr key={item.TransactionID}>
+                {/* <td>{item.TransactionID}</td> */}
+                {/* <td>{item.AccountID}</td> */}
+                <td>{item.ReceivingAccountID}</td>
+                <td>
+                  {formatDistanceToNow(new Date(item.Date), {
+                    addSuffix: true,
+                  })}
+                </td>
+                <td>{item.TransactionAmount}</td>
+                <td>{item.Comment}</td>
+                <td>
+                  <Button onClick={handleShow}>Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <DeleteModal show={deleteModalOpen} handleClose={handleClose} />
+    </>
   );
 };
