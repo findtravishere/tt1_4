@@ -4,7 +4,10 @@ from app.schemas.responses import User, Account
 from app.auth.oauth2 import get_current_user
 from app.routers import auth, users
 from app.config import settings
+from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
+
+import datetime
 
 app = FastAPI(root_path=f"{settings.root_path}")
 
@@ -99,7 +102,7 @@ txn = [
         "TransactionID": 3,
         "AccountID": 828120424,
         "ReceivingAccountID": 322798030,
-        "Date": "2022-11-25T04:00:00.000Z",
+        "Date": "2022-12-25T04:00:00.000Z",
         "TransactionAmount": 3000.00,
         "Comment": "Driving Centre Top-up"
     },
@@ -190,6 +193,31 @@ def get_user_by_id(id: int):
     return res
 
 
+@app.post("/transaction/add")
+async def add_transaction(
+    # TransactionID: int,
+    AccountID: int,
+    ReceivingAccountID: int | None=None,
+    # Date: str | None=None,
+    TransactionAmount: float | None=None,
+    Comment: str | None=None):
+
+    TransactionID = txn[-1]["TransactionID"] + 1
+    # AccountID = AccountID
+    # ReceivingAccountID = ReceivingAccountID
+    DateTime = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    new_txn = {
+        "TransactionID": TransactionID,
+        "AccountID": AccountID,
+        "ReceivingAccountID": ReceivingAccountID,
+        "Date": DateTime,
+        "TransactionAmount": TransactionAmount,
+        "Comment": Comment
+    }
+    txn.append(new_txn)
+    
+    return new_txn
+    
 @app.patch("/users/addr")
 def update_user_addr(id: int, addr: str):
     
@@ -211,20 +239,49 @@ def update_user_email(id: int, email: str):
 async def get_all_accounts():
     return accounts
 
-@app.post("/users/deladdr")
+@app.post("/deleteUserAdd")
 async def delete_user_address(id: int):
 
-    for u in user:
-        if u["UserID"] == id:
-            u["Address"] = ""
-            return u
+    for user in users:
+        if user["UserID"] == id:
+            user["Address"] = ""
+            return user
 
-@app.post("/users/delemail")
+    return "User not found"
+
+@app.post("/deleteUserEmail")
 async def delete_user_email(id: int):
 
     for u in users:
         if u["UserID"] == id:
             u["Email"] = ""
             return u
+    return "User not found"
 
+@app.get("/getUserTxn")
+async def get_txns_by_user_id(id: int):
+
+    account_ids = [acc['AccountID'] for acc in accounts if acc['UserID'] == id]
+    if not account_id:
+        return "No transactions found"
+    res = []
+    for acc_id in account_ids:
+        if txn["AccountID"] == acc_id:
+            res.append(acc_id)
+    return res
+
+@app.post("/transactions/del")
+async def delete_transaction(id: int):
+    target_txn = list(filter(lambda x: x["TransactionID"] == id, txn))[0]
+    now = datetime.datetime.now()
     
+    s = target_txn["Date"]
+    f = "%Y-%m-%dT%H:%M:%S.%fZ"
+    txn_time = datetime.datetime.strptime(s, f)
+    
+    
+    if txn_time > now:
+        txn.remove(target_txn)
+        print("Success")
+        
+
