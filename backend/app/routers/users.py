@@ -8,12 +8,11 @@ from sqlalchemy.orm import Session
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
-@router.post("/create", status_code=status.HTTP_201_CREATED, response_model=responses.User)
+@router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_user(user: inputs.CreateUser, db: Session = Depends(get_db)):
-    hashed_pwd = pwd_context.hash(user.password)
+    hashed_pwd = pwd_context.hash(user.Password)
     new_user = Users(**user.dict())
-    new_user.password = hashed_pwd
-    new_user.roles = [1234]
+    new_user.Password = hashed_pwd
     try:
         db.add(new_user)
         db.commit()
