@@ -33,7 +33,7 @@ const NavBar = () => {
     <div>
       <Navbar bg="danger" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Team 4</Navbar.Brand>
+          <Navbar.Brand href="/login">Team 4</Navbar.Brand>
           <Navbar.Toggle
             aria-controls="navbarScroll"
             data-bs-target="#navbarScroll"
