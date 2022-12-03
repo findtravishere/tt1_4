@@ -4,7 +4,7 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Pagination from "./pagination";
+// import Pagination from "./pagination";
 import Button from "react-bootstrap/Button";
 
 export const TransactionTable = () => {
