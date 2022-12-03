@@ -128,31 +128,29 @@ export const TransactionTable = () => {
     // 	))}
     // </div>
 
-    <>
+    <div style={{ marginTop: 40 }}>
       <div className="col-md-12 "></div>
-
       <div className="col-md-8 ">
         <Button variant="dark" onClick={() => exportPDF()}>
           Export as PDF
         </Button>
       </div>
-
-      <Table striped bordered hover>
+      <Table striped bordered hover style={{ marginTop: 20 }}>
         <thead>
           <tr>
-            <th>TransactionID</th>
-            <th>AccountID</th>
-            <th>ReceivingAccountID</th>
+            {/* <th>TransactionID</th> */}
+            {/* <th>AccountID</th> */}
+            <th>Receiving Account ID</th>
             <th>Date</th>
-            <th>TransactionAmount</th>
+            <th>Transaction Amount</th>
             <th>Comment</th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((item) => (
             <tr key={item.TransactionID}>
-              <td>{item.TransactionID}</td>
-              <td>{item.AccountID}</td>
+              {/* <td>{item.TransactionID}</td> */}
+              {/* <td>{item.AccountID}</td> */}
               <td>{item.ReceivingAccountID}</td>
               <td>
                 {formatDistanceToNow(new Date(item.Date), { addSuffix: true })}
@@ -163,6 +161,6 @@ export const TransactionTable = () => {
           ))}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 };
