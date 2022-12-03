@@ -8,7 +8,7 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import DeleteModal from "./DeleteModal";
 
-export const TransactionTable = () => {
+export const TransactionTable = ({ typeState }) => {
   // Current dummy data
   const dummyData = [
     {
@@ -53,8 +53,97 @@ export const TransactionTable = () => {
     },
   ];
 
+  // Dummy account data split on account type
+  const dummySplitAccountData = [
+    {
+      AccountID: 621156213,
+      UserID: 1,
+      AccountType: "Saving",
+      AcccountBalance: 70200.71,
+    },
+    {
+      AccountID: 958945214,
+      UserID: 1,
+      AccountType: "Current",
+      AcccountBalance: 99720.46,
+    },
+    {
+      AccountID: 828120424,
+      UserID: 2,
+      AccountType: "Multiplier",
+      AcccountBalance: 50640.12,
+    },
+    {
+      AccountID: 322798030,
+      UserID: 3,
+      AccountType: "Multiplier",
+      AcccountBalance: 39740.17,
+    },
+    {
+      AccountID: 353677039,
+      UserID: 3,
+      AccountType: "Saving",
+      AcccountBalance: 76660.21,
+    },
+    {
+      AccountID: 259555772,
+      UserID: 4,
+      AccountType: "Saving",
+      AcccountBalance: 14020.58,
+    },
+    {
+      AccountID: 339657462,
+      UserID: 1,
+      AccountType: "Current",
+      AcccountBalance: 47380.33,
+    },
+    {
+      AccountID: 785703027,
+      UserID: 5,
+      AccountType: "Current",
+      AcccountBalance: 42460.32,
+    },
+  ];
+
+  const accountIds = [];
+
+  const checkAccountType = (typeState) => {
+    if (typeState === "Saving") {
+      dummySplitAccountData.map((account) => {
+        if (account.AccountType === "Saving") {
+          accountIds.push(account.AccountID);
+        }
+      });
+    } else if (typeState === "Current") {
+      dummySplitAccountData.map((account) => {
+        if (account.AccountType === "Current") {
+          accountIds.push(account.AccountID);
+        }
+      });
+    } else if (typeState === "Multiplier") {
+      dummySplitAccountData.map((account) => {
+        if (account.AccountType === "Multiplier") {
+          accountIds.push(account.AccountID);
+        }
+      });
+    }
+  };
+
+  checkAccountType(typeState);
+
+  const filteredDummyData = [];
+
+  dummyData.map((transaction) => {
+    if (accountIds.includes(transaction.AccountID)) {
+      filteredDummyData.push(transaction);
+    }
+  });
+
+  console.log("Account ids:", accountIds);
+
   // State to handle transactions
-  const [transactions, setTransactions] = useState(dummyData);
+  console.log("Type state", typeState);
+  const [transactions, setTransactions] = useState(filteredDummyData);
 
   // Handling of global state change
   const [transactionState, setTransactionState] = useState(false);
@@ -67,6 +156,7 @@ export const TransactionTable = () => {
   const handleClose = () => setDeleteModalOpen(false);
   const handleShow = () => setDeleteModalOpen(true);
 
+  // Handle PDF button
   const exportPDF = () => {
     const unit = "pt";
     const size = "A4";
@@ -104,36 +194,23 @@ export const TransactionTable = () => {
   };
 
   // Handle fetching
-  // useEffect(() => {
-  // 	const fetchTransactions = async () => {
-  // 		const response = await axios.get("/api/transactions");
+  //   useEffect(() => {
+  //     const fetchTransactions = async () => {
+  //       const response = await axios.get("/api/transactions");
 
-  // 		if (response.status === 200) {
-  // 			console.log(response);
-  // 			setTransactions(() => [...response.data]);
-  // 		}
+  //       if (response.status === 200) {
+  //         console.log(response);
+  //         setTransactions(() => [...response.data]);
+  //       }
 
-  // 		setTransactionState(true);
-  // 	};
+  //       setTransactionState(true);
+  //     };
 
-  // 	fetchTransactions();
-  // }, [transactions]);
+  //     fetchTransactions();
+  //   }, [transactions]);
 
   // Skeleton mapping
   return (
-    // <div>
-    // 	{transactions.map((item) => (
-    // 		<li key={item.TransactionID}>
-    // 			<p>{item.TransactionID}</p>
-    // 			<p>{item.AccountID}</p>
-    // 			<p>{item.ReceivingAccountID}</p>
-    // 			<p>{formatDistanceToNow(new Date(item.Date), { addSuffix: true })}</p>
-    // 			<p>{item.TransactionAmount}</p>
-    // 			<p>{item.Comment}</p>
-    // 		</li>
-    // 	))}
-    // </div>
-
     <>
       <div style={{ marginTop: 40 }}>
         <div className="col-md-12 "></div>
@@ -155,23 +232,25 @@ export const TransactionTable = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((item) => (
-              <tr key={item.TransactionID}>
-                {/* <td>{item.TransactionID}</td> */}
-                {/* <td>{item.AccountID}</td> */}
-                <td>{item.ReceivingAccountID}</td>
-                <td>
-                  {formatDistanceToNow(new Date(item.Date), {
-                    addSuffix: true,
-                  })}
-                </td>
-                <td>{item.TransactionAmount}</td>
-                <td>{item.Comment}</td>
-                <td>
-                  <Button onClick={handleShow}>Delete</Button>
-                </td>
-              </tr>
-            ))}
+            {transactions.map((item) => {
+              return (
+                <tr key={item.TransactionID}>
+                  {/* <td>{item.TransactionID}</td> */}
+                  {/* <td>{item.AccountID}</td> */}
+                  <td>{item.ReceivingAccountID}</td>
+                  <td>
+                    {formatDistanceToNow(new Date(item.Date), {
+                      addSuffix: true,
+                    })}
+                  </td>
+                  <td>{item.TransactionAmount}</td>
+                  <td>{item.Comment}</td>
+                  <td>
+                    <Button onClick={handleShow}>Delete</Button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </div>
