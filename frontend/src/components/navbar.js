@@ -51,14 +51,12 @@ const NavBar = () => {
             {currentUser ? (
               <div className="navbar-nav ms-auto">
                 <Nav className="me-auto">
-                  <Nav.Link href="/profile/by-id/${currentUser.Id}">
-                    <strong>Hi, {currentUser.Name}</strong>{" "}
-                    <strong>ID: {currentUser.Id}</strong>
+                  <Nav.Link href="/profile">
+                    <strong>Hi, {currentUser.Email}</strong>{" "}
+                    <strong>ID: {currentUser.UserID}</strong>
                   </Nav.Link>
 
-                  <Nav.Link href={`/profile/by-id/${currentUser.Id}`}>
-                    Profile
-                  </Nav.Link>
+                  <Nav.Link href="profile">Profile</Nav.Link>
 
                   <Nav.Link href="/login" onClick={logout}>
                     Logout
@@ -81,7 +79,7 @@ const NavBar = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile/by-id/:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Home />}>
             <Route path="/saving" element={<Saving />} />
             <Route path="/current" element={<Current />} />
