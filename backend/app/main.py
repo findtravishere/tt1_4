@@ -174,21 +174,20 @@ def get_user_by_id(id: int):
     return res
 
 
-@app.post("/transaction/")
+@app.post("/transaction/add")
 async def add_transaction(
-    TransactionID: int,
+    # TransactionID: int,
     AccountID: int,
     ReceivingAccountID: int | None=None,
-    Date: str | None=None,
+    # Date: str | None=None,
     TransactionAmount: float | None=None,
     Comment: str | None=None):
 
-    TransactionID = txn[-1, "TransactionID"] + 1
+    TransactionID = txn[-1]["TransactionID"] + 1
     # AccountID = AccountID
     # ReceivingAccountID = ReceivingAccountID
-    DateTime = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-    
-    return {
+    DateTime = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    new_txn = {
         "TransactionID": TransactionID,
         "AccountID": AccountID,
         "ReceivingAccountID": ReceivingAccountID,
@@ -196,6 +195,9 @@ async def add_transaction(
         "TransactionAmount": TransactionAmount,
         "Comment": Comment
     }
+    txn.append(new_txn)
+    
+    return new_txn
     
 @app.patch("/users/addr")
 def update_user_addr(id: int, addr: str):
