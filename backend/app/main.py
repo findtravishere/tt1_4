@@ -184,8 +184,17 @@ async def add_transaction(
     Comment: str | None=None):
 
     TransactionID = txn[-1]["TransactionID"] + 1
-    # AccountID = AccountID
-    # ReceivingAccountID = ReceivingAccountID
+
+    for i in txn:
+        if AccountID in i.values():
+            continue
+        return "Account ID does not exist. Please enter a valid one." 
+
+    for i in txn:
+        if ReceivingAccountID in i.values():
+            continue
+        return "Receiving Account ID does not exist. Please enter a valid one."
+        
     DateTime = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
     new_txn = {
         "TransactionID": TransactionID,
@@ -206,6 +215,7 @@ def update_user_addr(id: int, addr: str):
         if u["UserID"] == id:
             u["Address"] = addr
             return u
+    return "User not found"
 
 
 @app.patch("/users/email")
@@ -215,6 +225,7 @@ def update_user_email(id: int, email: str):
         if u["UserID"] == id:
             u["Email"] = email
             return u
+    return "User not found"
 
 @app.get("/accounts/getall")
 async def get_all_accounts():
@@ -247,9 +258,9 @@ async def get_txns_by_user_id(id: int):
         return "No transactions found"
     res = []
     for acc_id in account_ids:
-        for tx in txns:
+        for tx in txn:
             if tx["AccountID"] == acc_id:
-                res.append(acc_id)
+                res.append(tx)
     return res
 
 @app.post("/transactions/del")
@@ -264,6 +275,8 @@ async def delete_transaction(id: int):
     
     if txn_time > now:
         txn.remove(target_txn)
-        print("Success")
+        return "Delete success"
+    else:
+        return "Failed to delete"
         
 
