@@ -12,6 +12,12 @@ export default function TransModal({ show, handleClose }) {
         e.preventDefault()
         handleClose()
 
+        const TransData = ({
+            Bankid: bankidRef.current.value,
+            bankid: dateRef.current.value,
+            amount: amountRef.current.value,
+            comment: commentRef.current.value
+        })
 
     }
 
