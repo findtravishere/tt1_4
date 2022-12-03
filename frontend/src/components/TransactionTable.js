@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import axios from "axios";
 
-const Home = () => {
+export const TransactionTable = () => {
+	// Current dummy data
 	const dummyData = [
 		{
 			TransactionID: 1,
@@ -45,16 +47,35 @@ const Home = () => {
 		},
 	];
 
+	// State to handle transactions
 	const [transactions, setTransactions] = useState(dummyData);
 
+	// Handling of global state change
+	const [transactionState, setTransactionState] = useState(false);
+	const updateTransactionState = () => {
+		setTransactionState(false);
+	};
+
+	// Handle fetching
+	// useEffect(() => {
+	// 	const fetchTransactions = async () => {
+	// 		const response = await axios.get("/api/transactions");
+
+	// 		if (response.status === 200) {
+	// 			console.log(response);
+	// 			setTransactions(() => [...response.data]);
+	// 		}
+
+	// 		setTransactionState(true);
+	// 	};
+
+	// 	fetchTransactions();
+	// }, [transactions]);
+
+	// Skeleton mapping
 	return (
 		<div>
 			{transactions.map((item) => (
-				// <WorkoutDetails
-				// 	updatePostState={updatePostState}
-				// 	workout={workout}
-				// 	key={workout._id}
-				// />
 				<li key={item.TransactionID}>
 					<p>{item.TransactionID}</p>
 					<p>{item.AccountID}</p>
@@ -67,5 +88,3 @@ const Home = () => {
 		</div>
 	);
 };
-
-export default Home;
