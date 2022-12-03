@@ -1,25 +1,51 @@
-const TransModal = () => {
+import { Form, Modal, Button } from "react-bootstrap"
+import { useRef } from "react"
+
+
+
+export default function TransModal({ show, handleClose }) {
+    const bankidRef = useRef()
+    const dateRef = useRef()
+    const amountRef = useRef()
+    const commentRef = useRef()
+    function handleSubmit(e) {
+        e.preventDefault()
+        handleClose()
+
+
+    }
+
     return ( 
-        <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+        <Modal show={show} onHide={handleClose}>
+            <Form onSubmit={handleSubmit}>
+                <Modal.Header closeButton>
+                <Modal.Title>Add Transaction</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Form.Group className="mb-3" controlId="BankId">
+                    <Form.Label>Bank Id</Form.Label>
+                    <Form.Control ref={bankidRef} type="number" required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="max">
+                    <Form.Label>Date</Form.Label>
+                    <Form.Control ref={dateRef} type="date" required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="max">
+                    <Form.Label>Transaction Amount</Form.Label>
+                    <Form.Control ref={amountRef} type="number" required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="max">
+                    <Form.Label>Comment</Form.Label>
+                    <Form.Control ref={commentRef} type="text" required />
+                </Form.Group>
+                <div className="d-flex justify-content-end">
+                    <Button variant="danger" type="submit">
+                    Add
+                    </Button>
                 </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-            </div>
-        </div>
+                </Modal.Body>
+            </Form>
+        </Modal>
      );
 }
  
-export default TransModal;

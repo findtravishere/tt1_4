@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 
 
-const AddButton = () => {
+const AddButton = (props) => {
     return ( 
         <Button variant="danger">Add</Button>
      );

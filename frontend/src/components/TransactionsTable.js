@@ -133,19 +133,11 @@ export const TransactionTable = () => {
 
     <>
       <div className="col-md-12 "></div>
-      
-      <Stack direction="Horizontal" gap="2">
         <div className="col-md-8 d-flex" >
-          <div>
             <Button variant="dark" onClick={() => exportPDF()}>
               Export as PDF
             </Button>
-          </div>
-          <div className={classes.add}>
-            <AddButton/>
-          </div>
         </div >
-      </Stack>
 
       <Table striped bordered hover>
         <thead>
