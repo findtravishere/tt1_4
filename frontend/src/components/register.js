@@ -101,10 +101,15 @@ const Register = () => {
   const [successful, setSuccessful] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     document.title = "Register";
   });
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -118,12 +123,12 @@ const Register = () => {
 
   const onChangeLastName = (e) => {
     const lastName = e.target.value;
-    setFirstName(lastName);
+    setLastName(lastName);
   };
 
   const onChangeAddress = (e) => {
     const address = e.target.value;
-    setFirstName(address);
+    setAddress(address);
   };
 
   const onChangeEmail = (e) => {
@@ -262,7 +267,7 @@ const Register = () => {
                 />
                 <button
                   type="button"
-                  className="btn btn-outline-primary btn-sm"
+                  className="btn btn-outline-dark btn-sm"
                   onClick={togglePassword}
                 >
                   Show Password
@@ -283,7 +288,7 @@ const Register = () => {
                 />
                 <button
                   type="button"
-                  className="btn btn-outline-primary btn-sm"
+                  className="btn btn-outline-dark btn-sm"
                   onClick={toggleConfirmPassword}
                 >
                   Show Password
@@ -302,8 +307,20 @@ const Register = () => {
               )}
             </div>
 
+            <div className="mb-3">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={handleChange}
+                />
+                Do you want to opt for physical statement?
+              </label>
+
+              <p>{checked.toString()}</p>
+            </div>
             <div className="form-group">
-              <button className="btn btn-primary btn-block">Sign Up</button>
+              <button className="btn btn-dark btn-block">Sign Up</button>
             </div>
           </div>
         )}
