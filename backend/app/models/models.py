@@ -28,7 +28,7 @@ class BankAccount(Base):
 class ScheduledTransactions(Base):
     __tablename__ = "scheduled_transactions"
     transaction_id = Column(Integer, primary_key = True, nullable = False)
-    account_id = Column(Integer, ForeignKey("User.user_id"), nullable = False)
+    account_id = Column(Integer, ForeignKey("User.user_id"), primary_key = True, nullable = False)
     receiving_account_id = Column(Integer, nullable = True)
     date = Column(String(255), nullable = True)
     transaction_amount = Column(FLOAT(precision=10, scale=2), nullable = True)
