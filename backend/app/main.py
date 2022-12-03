@@ -243,7 +243,7 @@ async def delete_user_email(id: int):
 async def get_txns_by_user_id(id: int):
 
     account_ids = [acc['AccountID'] for acc in accounts if acc['UserID'] == id]
-    if not account_id:
+    if not account_ids:
         return "No transactions found"
     res = []
     for acc_id in account_ids:
