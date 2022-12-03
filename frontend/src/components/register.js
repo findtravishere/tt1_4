@@ -110,6 +110,7 @@ const Register = () => {
 
   const handleChange = () => {
     setChecked(!checked);
+    console.log(checked);
   };
 
   const onChangeUsername = (e) => {
