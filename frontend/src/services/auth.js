@@ -21,26 +21,17 @@ const register = (
   username,
   password,
   email,
-  firstname,
-  lastname,
+  firstName,
+  lastName,
   address,
   optIntoPhyStatements
 ) => {
   return API_URL.post(
     `/create?username=${username}&password=${password}&email=${email}
-  &firstname=${firstname}
-  &lastname=${lastname}
+  &firstName=${firstName}
+  &lastName=${lastName}
   &address=${address}
-  &optIntoPhyStatements=${address}`,
-    {
-      username,
-      password,
-      email,
-      firstname,
-      lastname,
-      address,
-      optIntoPhyStatements,
-    }
+  &optIntoPhyStatements=${optIntoPhyStatements}`
   );
 };
 
