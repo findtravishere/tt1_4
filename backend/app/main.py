@@ -4,6 +4,7 @@ from app.schemas.responses import User, Account
 from app.auth.oauth2 import get_current_user
 from app.routers import auth, users
 from app.config import settings
+from datetime import datetime
 
 app = FastAPI(root_path=f"{settings.root_path}")
 
@@ -171,3 +172,26 @@ def get_user_by_id(id: int):
     res  = list(filter(lambda x: x["UserID"] == id, user))
     print(res)
     return res
+
+@app.post("/transaction/")
+async def add_transaction(
+    TransactionID: int,
+    AccountID: int,
+    ReceivingAccountID: int | None=None,
+    Date: str | None=None,
+    TransactionAmount: float | None=None,
+    Comment: str | None=None):
+
+    TransactionID = txn[-1, "TransactionID"] + 1
+    # AccountID = AccountID
+    # ReceivingAccountID = ReceivingAccountID
+    DateTime = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+    
+    return {
+        "TransactionID": TransactionID,
+        "AccountID": AccountID,
+        "ReceivingAccountID": ReceivingAccountID,
+        "Date": DateTime,
+        "TransactionAmount": TransactionAmount,
+        "Comment": Comment
+    }
