@@ -9,11 +9,11 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
-  const { id } = useParams();
+  const { UserID } = useParams();
   const form = useRef();
 
   const initialCurrentState = {
-    id: null,
+    UserID: null,
     email: "",
     address: "",
   };
@@ -21,8 +21,8 @@ const Profile = () => {
   const [currentProfile, setCurrentProfile] = useState(initialCurrentState);
   const [submitted, setSubmitted] = useState(false);
 
-  const getUserProfile = (id) => {
-    UserService.update(id)
+  const getUserProfile = (UserID) => {
+    UserService.update(UserID)
       .then((response) => {
         setCurrentProfile(response.data);
         console.log(response.data, "update");
@@ -33,8 +33,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getUserProfile(id);
-  }, [id]);
+    getUserProfile(UserID);
+  }, [UserID]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +42,7 @@ const Profile = () => {
   };
 
   const updateProfile = () => {
-    UserService.update(currentProfile.id, currentProfile)
+    UserService.update(currentProfile.UserID, currentProfile)
       .then((response) => {
         console.log(response.data, "update");
         setSubmitted(true);
@@ -72,6 +72,7 @@ const Profile = () => {
             <header className="jumbotron">
               <h3>
                 <strong>Welcome, {currentUser.Name}</strong>
+                <strong>Welcome, {currentUser.access_token}</strong>
               </h3>
             </header>
 
@@ -82,7 +83,7 @@ const Profile = () => {
 
             <div className="mb-3">
               <label>Id:</label>
-              <strong className="form-control"> {currentUser.Id}</strong>
+              <strong className="form-control"> {currentUser.UserID}</strong>
             </div>
 
             <div className="mb-3">
