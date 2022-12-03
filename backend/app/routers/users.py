@@ -57,7 +57,7 @@ async def get_user_by_id(id: int, db: Session = Depends(get_db)):
     return responses.User(**user.__dict__)
 
 
-@router.post("/seed", response_model=list[responses.User])
+@router.post("/seed")
 async def seed_users(db: Session = Depends(get_db)):
     # 1234: normie rights,
     # 2354: admin rights
@@ -83,9 +83,7 @@ async def seed_users(db: Session = Depends(get_db)):
     try:
         db.add_all(seed_users)
         db.commit()
-    except ValueError:
-        db.rollback()
-        raise HTTPException("Value Error: Email ")
+
     except Exception as error:
         db.rollback()
         raise HTTPException(error)
