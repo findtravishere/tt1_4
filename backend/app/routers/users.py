@@ -49,7 +49,7 @@ async def get_user_by_id(id: int, db: Session = Depends(get_db)):
     return responses.User(**user.__dict__)
 
 
-@router.post("/seed", response_model=list[responses.User])
+@router.post("/seed")
 async def seed_users(db: Session = Depends(get_db)):
     # 1234: normie rights,
     # 2354: admin rights
