@@ -2,6 +2,11 @@ from pydantic import BaseModel
 
 
 class CreateUser(BaseModel):
-    email: str
-    name: str
-    password: str
+    Username: str
+    Email: str
+    Address: str
+    Firstname: str
+    Lastname: str
+    Email: str
+    Address: str
+    OptIntoPhyStatements: bool
