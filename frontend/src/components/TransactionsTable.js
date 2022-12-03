@@ -2,6 +2,9 @@ import { React, useState, useEffect } from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import Pagination from "./pagination";
 
 export const TransactionTable = () => {
   // Current dummy data
@@ -57,6 +60,42 @@ export const TransactionTable = () => {
     setTransactionState(false);
   };
 
+  const exportPDF = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait"; // portrait or landscape
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    const title = "Table results";
+    const headers = [
+      [
+        "TransactionID",
+        "AccountID",
+        "ReceivingAccountID",
+        "Date",
+        "TransactionAmount",
+        "Comment",
+      ],
+    ];
+    const data = transactions.map((elt) => [
+      elt.TransactionID,
+      elt.AccountID,
+      elt.ReceivingAccountID,
+      elt.Date,
+      elt.TransactionAmount,
+      elt.Comment,
+    ]);
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data,
+    };
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("Results.pdf");
+  };
+
   // Handle fetching
   // useEffect(() => {
   // 	const fetchTransactions = async () => {
@@ -87,31 +126,42 @@ export const TransactionTable = () => {
     // 		</li>
     // 	))}
     // </div>
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>TransactionID</th>
-          <th>AccountID</th>
-          <th>ReceivingAccountID</th>
-          <th>Date</th>
-          <th>TransactionAmount</th>
-          <th>Comment</th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.map((item) => (
-          <tr key={item.TransactionID}>
-            <td>{item.TransactionID}</td>
-            <td>{item.AccountID}</td>
-            <td>{item.ReceivingAccountID}</td>
-            <td>
-              {formatDistanceToNow(new Date(item.Date), { addSuffix: true })}
-            </td>
-            <td>{item.TransactionAmount}</td>
-            <td>{item.Comment}</td>
+
+    <>
+      <div className="col-md-12 "></div>
+
+      <div className="col-md-8 ">
+        <button variant="dark" onClick={() => exportPDF()}>
+          Export as PDF
+        </button>{" "}
+      </div>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>TransactionID</th>
+            <th>AccountID</th>
+            <th>ReceivingAccountID</th>
+            <th>Date</th>
+            <th>TransactionAmount</th>
+            <th>Comment</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {transactions.map((item) => (
+            <tr key={item.TransactionID}>
+              <td>{item.TransactionID}</td>
+              <td>{item.AccountID}</td>
+              <td>{item.ReceivingAccountID}</td>
+              <td>
+                {formatDistanceToNow(new Date(item.Date), { addSuffix: true })}
+              </td>
+              <td>{item.TransactionAmount}</td>
+              <td>{item.Comment}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
   );
 };
