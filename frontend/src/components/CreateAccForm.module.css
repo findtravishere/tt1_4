@@ -1,0 +1,48 @@
+.signup {
+    margin: 3rem auto;
+    width: 95%;
+    max-width: 25rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: #f9f9fa;
+    text-align: center;
+}
+
+.control {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.control label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+.control input {
+  font: inherit;
+  background-color: #f8c9cd;
+  color: #040007;
+  border-radius: 4px;
+  border: 1px solid white;
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem;
+}
+
+.actions button {
+    cursor: pointer;
+    font: inherit;
+    color: white;
+    background-color: rgb(252, 11, 11);
+    border: 1px solid #fa0808;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    padding: 0.5rem 2.5rem;
+  }
+  
+  .actions button:hover {
+    background-color: #f18484;
+    border-color: #f8838d;
+  }
+  
