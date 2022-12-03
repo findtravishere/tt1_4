@@ -4,6 +4,7 @@ const API_URL = axios.create({
   baseURL: "http://restapi.adequateshop.com/api/authaccount/",
   headers: {
     Authorization: "Bearer <token>",
+    "Content-type": "application/json",
   },
 });
 
@@ -16,7 +17,15 @@ const login = (email, password) => {
   });
 };
 
-const register = (username, password, email, firstname, lastname, address) => {
+const register = (
+  username,
+  password,
+  email,
+  firstname,
+  lastname,
+  address,
+  optIntoPhyStatements
+) => {
   return API_URL.post(`register`, {
     username,
     password,
@@ -24,6 +33,7 @@ const register = (username, password, email, firstname, lastname, address) => {
     firstname,
     lastname,
     address,
+    optIntoPhyStatements,
   });
 };
 
