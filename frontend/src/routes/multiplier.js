@@ -5,7 +5,7 @@ const Multiplier = () => {
   return (
     <div style={{ marginTop: 20 }}>
       <Balance amount="776.85" />
-      <TransactionTable />
+      <TransactionTable typeState={"Multiplier"} />
     </div>
   );
 };

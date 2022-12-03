@@ -5,7 +5,7 @@ const Current = () => {
   return (
     <div style={{ marginTop: 20 }}>
       <Balance amount="954.20" />
-      <TransactionTable />
+      <TransactionTable typeState={"Current"} />
     </div>
   );
 };
