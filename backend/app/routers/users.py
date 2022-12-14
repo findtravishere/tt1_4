@@ -57,30 +57,41 @@ async def seed_users(db: Session = Depends(get_db)):
         Users(
             **{
                 "email": "normie@example.com",
-                "name": "Normie",
+                "username": "normie@example.com",
+                "firstname": "Normie",
+                "lastname": "Normie",
                 "password": pwd_context.hash("password"),
-                "roles": [1234],
             }
         ),
         Users(
             **{
                 "email": "admin@example.com",
-                "name": "Admin",
+                "username": "admin@example.com",
+                "firstname": "Admin",
+                "lastname": "Admin",
                 "password": pwd_context.hash("password"),
-                "roles": [1234, 2345],
             }
         ),
     ]
 
-    try:
-        db.add_all(seed_users)
-        db.commit()
-    except ValueError:
-        db.rollback()
-        raise HTTPException("Value Error: probably already created")
-    except Exception as error:
-        db.rollback()
-        raise HTTPException(error)
+    test_user = db.query(Users).first()
+    if test_user:
+        print(test_user.__dict__)
+        raise HTTPException(status_code=403, detail="can only seed empty DB, DB is not empty")
+    else:
+        try:
+            db.add_all(seed_users)
+            db.commit()
+        except Exception as error:
+            db.rollback()
+            raise HTTPException(error)
 
-    response = list(map(lambda user: responses.User(**user.__dict__), seed_users))
+    response = list(map(lambda user: responses.User(**{
+        "id":user.id,
+        "email":user.email,
+        "username": user.username,
+        "firstname": user.firstname,
+        "lastname": user.lastname,
+    }), seed_users))
+    print(response)
     return response

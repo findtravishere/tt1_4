@@ -11,5 +11,7 @@ class CreateUser(BaseModel):
 class User(BaseModel):
     id: int
     email: str
-    name: str
-    roles: list[str]
+    username: str
+    firstname: str
+    lastname: str
+
