@@ -56,17 +56,24 @@ async def seed_users(db: Session = Depends(get_db)):
         Users(
             **{
                 "email": "normie@example.com",
-                "name": "Normie",
+                "username": "Normie",
+                "firstname": "Normie",
+                "lastname": "Normie",
+                "address": "block 1",
+                "opt_into_physical_statements": False,
                 "password": pwd_context.hash("password"),
-                "roles": [1234],
             }
         ),
         Users(
             **{
                 "email": "admin@example.com",
-                "name": "Admin",
+                "username": "Admin",
+                "firstname": "Admin",
+                "lastname": "Admin",
+                "address": "block 2",
+                "address": "block 2",
+                "opt_into_physical_statements": True,
                 "password": pwd_context.hash("password"),
-                "roles": [1234, 2345],
             }
         ),
     ]
@@ -81,5 +88,7 @@ async def seed_users(db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(error)
 
-    response = list(map(lambda user: responses.User(**user.__dict__), seed_users))
+    added = db.query(Users).all()
+    print(type(added[0].created_at))
+    response = list(map(lambda user: responses.User(**user.__dict__), added))
     return response
